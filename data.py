@@ -20,7 +20,20 @@ class Olist:
         Its keys should be 'sellers', 'orders', 'order_items' etc...
         Its values should be pandas.DataFrames loaded from csv files
         """
-        pass  # YOUR CODE HERE
+        csv_path = Path("~/.lewagon/olist/data/csv").expanduser()
+        file_paths = list(csv_path.iterdir())
+        file_names = ['olist_sellers_dataset.csv', 'product_category_name_translation.csv',
+                      'olist_orders_dataset.csv', 'olist_order_items_dataset.csv',
+                      'olist_customers_dataset.csv',
+                      'olist_geolocation_dataset.csv', 'olist_order_payments_dataset.csv',
+                      'olist_order_reviews_dataset.csv', 'olist_products_dataset.csv']
+        key_names = [file_name.replace('olist_','').replace('.csv','').replace('_dataset','') for file_name in file_names]
+
+        data = {}
+        for key, file_path in zip(key_names, file_paths):
+            data[key] = pd.read_csv(file_path)
+
+        return data
 
     def ping(self):
         """
